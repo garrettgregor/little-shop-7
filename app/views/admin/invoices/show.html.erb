@@ -1,0 +1,15 @@
+<%= render partial: "admin/admin_nav" %>
+
+<br><br>
+
+<br><br><h2 style="background-color:lightgrey; border-top: 3px solid black; padding:10px; margin:20px;"><center>Invoice #<%= "#{@invoice.id}" %></center></h2>
+
+<ul>Status:<%= @invoice.status %></ul>
+<ul>Created on: <%= @invoice.format_time_stamp %></ul>
+
+<ul><h2>Customer:</h2>
+  <ul><%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></ul>
+  <ul>123 Main St.</ul>
+  <ul>Denver, CO 80202</ul>
+</ul>
+
