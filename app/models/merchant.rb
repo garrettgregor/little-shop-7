@@ -17,7 +17,6 @@ class Merchant < ApplicationRecord
   end
 
   def not_shipped_items
-    # require 'pry'; binding.pry
     self.invoices.joins(:invoice_items)
     .where("invoice_items.status != 2")
     .order(:created_at)
