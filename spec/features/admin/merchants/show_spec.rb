@@ -12,6 +12,13 @@ RSpec.describe "admin merchant show", type: :feature do
         expect(page).to_not have_content(merchant_2.name)
         expect(page).to_not have_content(merchant_3.name)
       end
+
+      it "has the ability to update merchant's information" do
+        visit admin_merchant_path(merchant_1)
+
+        expect(page).to have_content(merchant_1.name)
+        expect(page).to have_link("Update Merchant", href: edit_admin_merchant_path(merchant_1))
+      end
     end
   end
 end
