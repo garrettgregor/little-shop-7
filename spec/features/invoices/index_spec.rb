@@ -95,6 +95,7 @@ RSpec.describe "Invoices index" do
   describe "Invoices Index Page" do
     it 'shows the invoices index page' do
       visit "/merchants/#{merchant.id}/invoices"
+      
       expect(page).to have_content(invoice1.id)
       expect(page).to have_content(invoice2.id)
       expect(page).to have_content(invoice3.id)
@@ -112,7 +113,7 @@ RSpec.describe "Invoices index" do
       expect(page).to have_content(invoice15.id)
       expect(page).to have_content(invoice16.id)
       expect(page).to have_content(invoice17.id)
-      save_and_open_page
+      
     end
   end
 end

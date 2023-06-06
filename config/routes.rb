@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   end
 
   resources :merchants, except: [:index, :show, :edit, :destroy, :new, :create, :update] do 
-    resources :invoices, only: [:index, :show], controller: "merchant/invoices"
+    resources :invoices, only: [:index, :show], controller: "merchants/invoices"
+    resources :invoice_items, only: [:update], controller: "merchants/invoice_items"
   end
   
   resources :admin, only: [:index]
