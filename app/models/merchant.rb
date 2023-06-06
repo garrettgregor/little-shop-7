@@ -27,4 +27,12 @@ class Merchant < ApplicationRecord
     .order('invoice_items.created_at ASC')
   end
 
+  def enabled_items
+    items.where(status: :enabled)
+  end
+
+  def disabled_items
+    items.where(status: :disabled)
+  end
+
 end

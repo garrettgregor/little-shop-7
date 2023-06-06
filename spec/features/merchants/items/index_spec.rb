@@ -5,11 +5,11 @@ RSpec.describe "Merchant Items Index Page" do
   let!(:merchant2) { create(:merchant, id: 2, name:"Dealer of Life", status: 1 )}
 
 
-  let!(:item1) { create(:item, id: 1, merchant_id: 1, status: 1 )}
-  let!(:item2) { create(:item, id: 2, merchant_id: 1, status: 0 )}
-  let!(:item3) { create(:item, id: 3, merchant_id: 1, status: 0)}
-  let!(:item4) { create(:item, id: 4, merchant_id: 1, status: 1 )}
-  let!(:item5) { create(:item, id: 5, merchant_id: 1, status: 1 )}
+  let!(:item1) { create(:item, id: 1, merchant_id: 1, status: 1, name: "Mediocre Concrete Bench" )}
+  let!(:item2) { create(:item, id: 2, merchant_id: 1, status: 0, name: "Ballpoint Pen" )}
+  let!(:item3) { create(:item, id: 3, merchant_id: 1, status: 0, name: "Frieza Pod" )}
+  let!(:item4) { create(:item, id: 4, merchant_id: 1, status: 1, name: "Heavy Duty Leather Pants" )}
+  let!(:item5) { create(:item, id: 5, merchant_id: 1, status: 1, name: "Durable Marble Hat" )}
 
   let!(:item6) { create(:item, id: 6, merchant_id: 2 )}
   let!(:item7) { create(:item, id: 7, merchant_id: 2 )}
@@ -155,6 +155,38 @@ RSpec.describe "Merchant Items Index Page" do
         expect(current_path).to eq("/merchants/#{merchant.id}/items")
         expect(page).to_not have_checked_field("Enable")
         expect(page).to have_checked_field("Disable")
+      end
+    end
+  end
+
+  describe "Merchant Items Grouped by Status" do
+    it "displays enabled sections for items with status as enabled" do
+      visit "/merchants/#{merchant.id}/items"
+
+      expect(page).to have_content("Enabled Items")
+
+      within("#enabled-items") do
+        expect(page).to have_content(item1.name)
+        expect(page).to have_content(item4.name)
+        expect(page).to have_content(item5.name)
+
+        expect(page).to_not have_content(item2.name)
+        expect(page).to_not have_content(item3.name)
+      end
+    end
+
+    it "displays disabled sections for items with status as disabled" do
+      visit "/merchants/#{merchant.id}/items"
+
+      expect(page).to have_content("Disabled Items")
+
+      within("#disabled-items") do
+        expect(page).to have_content(item2.name)
+        expect(page).to have_content(item3.name)  
+      save_and_open_page
+        expect(page).to_not have_content(item1.name)
+        expect(page).to_not have_content(item4.name)
+        expect(page).to_not have_content(item5.name)
       end
     end
   end
