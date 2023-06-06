@@ -13,3 +13,35 @@
   <ul>Denver, CO 80202</ul>
 </ul>
 
+<style>
+table, th, td {
+  border: 3px solid black;
+  padding: 10px;
+  margin: 0px;
+  font-size: 20px;
+}
+</style>
+<body>
+
+<br><ul><h2>Items on this Invoice:</h2></ul>
+
+<div id="invoice_items"> 
+<table style="width:98%; margin-left:20px; margin-right:20px; margin-bottom:20px;">
+  <tr>
+    <th style="background-color:DarkGrey; color:White"><center>Item Name</th>
+    <th style="background-color:DarkGrey; color:White"><center>Quantity</th>
+    <th style="background-color:DarkGrey; color:White"><center>Unit Price</th>
+    <th style="background-color:DarkGrey; color:White"><center>Status</th>
+  </tr>
+  <% @invoice.invoice_items.each do |invoice_item| %>
+    <tr id="items-<%= invoice_item.item.id %>">
+        <td style="background-color:LightGrey;"><center><%= invoice_item.item.name %></td>
+        <td style="background-color:LightGrey;"><center><%= invoice_item.quantity %></td>
+        <td style="background-color:LightGrey;"><center><%= number_to_currency(invoice_item.cents_to_dollar) %></td>
+        <td style="background-color:LightGrey; font-size:20px;"><center><%= invoice_item.status %></td>
+    </tr>
+  <% end %>
+</table>
+</div>
+</body>
+

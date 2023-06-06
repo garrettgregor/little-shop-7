@@ -34,10 +34,10 @@ RSpec.describe 'Admin/invoices show page', type: :feature do
   let!(:invoice_item_4) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[3].id, status: 0 ) }
   let!(:invoice_item_5) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[4].id, status: 2 ) }
   let!(:invoice_item_6) { create(:invoice_item, invoice_id: invoice_8.id, item_id: items_m1[4].id, status: 2 ) }
-  let!(:invoice_item_7) { create(:invoice_item, invoice_id: invoice_9.id, item_id: items_m1[3].id, status: 0 ) }
+  let!(:invoice_item_7) { create(:invoice_item, invoice_id: invoice_1.id, item_id: items_m1[3].id, status: 0 ) }
   let!(:invoice_item_8) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[4].id, status: 0 ) }
-  let!(:invoice_item_9) { create(:invoice_item, invoice_id: invoice_9.id, item_id: items_m1[4].id, status: 0 ) }
-  let!(:invoice_item_10) { create(:invoice_item, invoice_id: invoice_10.id, item_id: items_m1[4].id, status: 0 ) }
+  let!(:invoice_item_9) { create(:invoice_item, invoice_id: invoice_1.id, item_id: items_m1[4].id, status: 1 ) } 
+  let!(:invoice_item_10) { create(:invoice_item, invoice_id: invoice_1.id, item_id: items_m1[2].id, status: 0 ) }
 
   let!(:trans_1_s) { create_list(:transaction, 1, result: 1, invoice_id: invoice_1.id) }
   let!(:trans_2_s) { create_list(:transaction, 2, result: 1, invoice_id: invoice_2.id) }
@@ -63,6 +63,26 @@ RSpec.describe 'Admin/invoices show page', type: :feature do
       expect(customer_1.first_name).to appear_before(customer_1.last_name)
       expect(page).to_not have_content(customer_2.first_name)
       expect(page).to_not have_content(customer_2.last_name)
+    end
+  end
+
+  describe 'displays a section for items on this invoice with attributes' do
+    it 'should display the attributes of items on this invoice in a table' do
+      visit admin_invoice_path(invoice_1)
+      
+      expect(page).to have_content("Items on this Invoice:")
+      expect(page).to have_content(items_m1[2].name)
+      expect(page).to have_content(items_m1[3].name)
+      expect(page).to have_content(items_m1[4].name)
+      expect(page).to have_content(invoice_item_7.quantity)
+      expect(page).to have_content(invoice_item_9.quantity)
+      expect(page).to have_content(invoice_item_10.quantity)
+      expect(page).to have_content(invoice_item_7.cents_to_dollar)
+      expect(page).to have_content(invoice_item_9.cents_to_dollar)
+      expect(page).to have_content(invoice_item_10.cents_to_dollar)
+      expect(page).to have_content(invoice_item_7.status)
+      expect(page).to have_content(invoice_item_9.status)
+      expect(page).to have_content(invoice_item_10.status)
     end
   end
 end
