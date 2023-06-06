@@ -1,0 +1,33 @@
+<%= render partial: "admin/admin_nav" %>
+<br>
+<br>
+<br>
+<br>
+<br>
+<%#= Don't need to do form_with model in order to pull in model values into the fields %>
+<%#= form_with(model: @merchant, url: "admin/merchants/#{@merchant.id}", method: :patch) do |f| %>
+<%= form_with(url: admin_merchant_path(@merchant), method: :patch) do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name, value: @merchant.name %>
+  <br>
+  <%= f.radio_button :status, "disabled", checked: (true if @merchant.status == "disabled") %>
+  <%= f.label :status_disabled, "Disabled" %>
+  <br>
+  <%= f.radio_button :status, "enabled", checked: (true if @merchant.status == "enabled") %>
+  <%= f.label :status_enabled, "Enabled" %>
+  <br>
+  <%= f.submit "Submit" %>
+<% end %>
+
+<%#= refactor at some point? to know one day? unable to be more specific with checked values %>
+<%#= form_with(url: admin_merchant_path(@merchant), method: :patch) do |f| %>
+  <%#= f.label :name %>
+  <%#= f.text_field :name, value: @merchant.name %>
+  <%#= f.collection_radio_buttons(:id, Merchant.select(:status).distinct, :id, :status, html_options: { name: 'something' } ) do |b| %>
+  <%#= f.collection_radio_buttons(:merchant_id, Merchant.all, :id, :status) do |b| %>
+    <%#= b.label do %>
+      <%#= b.radio_button + b.text %>
+    <%# end %>
+  <%# end %>
+  <%#= f.submit "Submit" %>
+<%# end %>
