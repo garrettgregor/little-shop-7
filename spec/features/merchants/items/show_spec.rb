@@ -116,5 +116,26 @@ RSpec.describe 'Merchant Items Show Page' do
       expect(page).to_not have_content(item3.name)
       expect(page).to_not have_content(item3.unit_price)
     end
+
+    it "displays a link to update the item information" do
+      visit "/merchants/#{merchant.id}/items/#{item1.id}"
+
+      expect(page).to have_link("Update Item")
+      click_button("Update Item")
+
+      current_path("/merchants/#{merchant.id}/items/#{item1.id}/edit")
+
+      fill_in(:name, with: "Frieza Pod")
+      fill_in(:description, with: "a floating, egg-shaped vehicle.")
+      fill_in(:unit_price, with: 19990)
+      click_button("Update Item")
+
+      current_path("/merchants/#{merchant.id}/items/#{item1.id}")
+
+      expect(page).to have_content("Frieza Pod")
+      expect(page).to have_content("Frieza Pod")
+      expect(page).to have_content("Frieza Pod")
+
+    end
   end
 end
