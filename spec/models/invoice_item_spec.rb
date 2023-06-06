@@ -21,8 +21,8 @@ RSpec.describe InvoiceItem, type: :model do
     let!(:invoice_item_2) { create(:invoice_item, item_id: item_2.id, invoice_id: invoice_2.id, status: 1, unit_price: 500) }
     
     it '#format_unit_price' do
-      expect(invoice_item_1.format_unit_price).to eq("400.01")
-      expect(invoice_item_7.format_unit_price).to eq("123.45")
+      expect(invoice_item_1.format_unit_price).to eq("90.0")
+      expect(invoice_item_2.format_unit_price).to eq("5.0")
     end
 
   end

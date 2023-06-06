@@ -61,4 +61,12 @@ RSpec.describe Invoice, type: :model do
       end
     end
   end
+  
+  describe "instance methods" do 
+    describe "#customer_full_name" do
+      it "displays the customer's full name" do
+        expect(invoice_1.customer_full_name).to eq("#{customer_1.first_name} #{customer_1.last_name}")
+      end
+    end
+  end
 end
