@@ -30,5 +30,4 @@ class Merchant < ApplicationRecord
   def self.disabled_merchants
     where("status != 1")
   end
-
 end
