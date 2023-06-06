@@ -23,4 +23,11 @@ class Merchant < ApplicationRecord
     .group(:id)
   end
 
+  def self.enabled_merchants
+    where("status != 0")
+  end
+
+  def self.disabled_merchants
+    where("status != 1")
+  end
 end

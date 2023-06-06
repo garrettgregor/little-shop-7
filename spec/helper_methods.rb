@@ -1,7 +1,11 @@
 def load_test_data
-  let!(:merchant_1) { create(:merchant) }
-  let!(:merchant_2) { create(:merchant) }
-  let!(:merchant_3) { create(:merchant) }
+  let!(:merchant_1) { create(:merchant, name: "Amazon") }
+  let!(:merchant_2) { create(:merchant, name: "Target") }
+  let!(:merchant_3) { create(:merchant, name: "King Soopers") }
+  let!(:merchant_4) { create(:merchant, name: "Merchant 4", status: 1) }
+  let!(:merchant_5) { create(:merchant, name: "Merchant 5", status: 1) }
+  let!(:merchant_6) { create(:merchant, name: "Merchant 6", status: 0) }
+  let!(:merchant_7) { create(:merchant, name: "Merchant 7", status: 0) }
 
   let!(:items_m1) { create_list(:item, 5, merchant_id: merchant_1.id) }
 
