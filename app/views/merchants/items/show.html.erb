@@ -2,4 +2,5 @@
 
 <h3><%= @item.name %></h3>
 <p>Desciption: <%= @item.description %></p>
-<%= @item.unit_price %>
+<p>Current Price: <%= @item.unit_price %> </p>
+<%= button_to 'Update Item', "/merchants/#{@merchant.id}/items/#{@item.id}/edit", method: :get %>
