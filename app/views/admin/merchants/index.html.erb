@@ -9,3 +9,31 @@
     <% end %>
   </ol>
 </div>
+
+<div id="enabled-merchants", style="float:left; margin:20px;"><h3>Enabled Merchants</h3>
+  <ul>
+    <% @enabled_merchants.each do |enabled_merchant| %>
+      <div id="<%= enabled_merchant.id %>">
+        <li><%= enabled_merchant.name %><%= form_with model: enabled_merchant, url: admin_merchant_path(enabled_merchant), method: :patch, local: true do |f| %></li><br>
+                                          <%= f.hidden_field :status, value: "disabled" %>
+                                          <%= f.hidden_field :name, value: enabled_merchant.name %>
+                                          <%= f.submit "Disable" %>
+                                        <% end %>
+      </div>
+    <% end %>
+  </ul>
+</div>
+<br>
+
+<div id="disabled-merchants", style="float:left; margin:20px;"><h3>Disabled Merchants</h3>
+  <ul>
+    <% @disabled_merchants.each do |disabled_merchant| %>
+      <div id="<%= disabled_merchant.id %>">
+        <li><%= disabled_merchant.name %><%= form_with model: disabled_merchant, url: admin_merchant_path(disabled_merchant), method: :patch, local: true do |f| %></li><br>
+                                          <%= f.hidden_field :status, value: "enabled" %>
+                                          <%= f.submit "Enable" %>
+                                        <% end %>
+      </div>
+    <% end %>
+  </ul>
+</div>

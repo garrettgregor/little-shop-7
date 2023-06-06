@@ -4,20 +4,25 @@
 <br>
 <br>
 <br>
-<%#= Don't need to do form_with model in order to pull in model values into the fields %>
-<%#= form_with(model: @merchant, url: "admin/merchants/#{@merchant.id}", method: :patch) do |f| %>
-<%= form_with(url: admin_merchant_path(@merchant), method: :patch) do |f| %>
+<%= form_with model: @merchant, url: admin_merchant_path(@merchant) do |f| %>
   <%= f.label :name %>
-  <%= f.text_field :name, value: @merchant.name %>
-  <br>
-  <%= f.radio_button :status, "disabled", checked: (true if @merchant.status == "disabled") %>
-  <%= f.label :status_disabled, "Disabled" %>
-  <br>
-  <%= f.radio_button :status, "enabled", checked: (true if @merchant.status == "enabled") %>
-  <%= f.label :status_enabled, "Enabled" %>
+  <%= f.text_field :name %>
   <br>
   <%= f.submit "Submit" %>
 <% end %>
+
+<%#= form_with(url: admin_merchant_path(@merchant), method: :patch) do |f| %>
+  <%#= f.label :name %>
+  <%#= f.text_field :name, value: @merchant.name %>
+  <!--br>
+  <%#= f.radio_button :status, "disabled", checked: (true if @merchant.status == "disabled") %>
+  <%#= f.label :status_disabled, "Disabled" %>
+  <!--br>
+  <%#= f.radio_button :status, "enabled", checked: (true if @merchant.status == "enabled") %>
+  <%#= f.label :status_enabled, "Enabled" %>
+  <!--br>
+  <%#= f.submit "Submit" %>
+<%# end %>
 
 <%#= refactor at some point? to know one day? unable to be more specific with checked values %>
 <%#= form_with(url: admin_merchant_path(@merchant), method: :patch) do |f| %>

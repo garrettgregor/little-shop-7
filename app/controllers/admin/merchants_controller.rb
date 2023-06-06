@@ -1,6 +1,8 @@
 class Admin::MerchantsController < ApplicationController
   def index
     @merchants = Merchant.all
+    @enabled_merchants = Merchant.enabled_merchants
+    @disabled_merchants = Merchant.disabled_merchants
   end
 
   def show
@@ -14,21 +16,14 @@ class Admin::MerchantsController < ApplicationController
   def update
     @merchant = Merchant.find(params[:id])
     @merchant.update(merchant_params)
-    redirect_to(admin_merchant_path(@merchant))
+    redirect_to(admin_merchants_path) if params[:commit] == "Enable" || params[:commit] == "Disable"
+    redirect_to(admin_merchant_path(@merchant)) if params[:commit] == "Submit"
     flash[:info] = "Merchant Information Updated"
-    ## Might want to use this for a future story
-    # if params[:status] == "disabled"
-    # elsif params[:status] == "enabled"
-    #   @merchant.update(name: params[:name], status: (1 if params[:status] == "enabled"))
-    #   redirect_to(admin_merchant_path(@merchant))
-    #   flash[:info] = "Merchant Information Updated"
-    # end
   end
 
   private
 
   def merchant_params
-    params.permit(:name, :status)
-
+    params.require(:merchant).permit(:name, :status)
   end
 end
