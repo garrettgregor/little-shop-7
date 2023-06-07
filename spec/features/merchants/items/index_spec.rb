@@ -217,4 +217,23 @@ RSpec.describe "Merchant Items Index Page" do
       expect(page).to have_content("Dragon Radar")
     end
   end
+
+  describe "Merchant Items Index: 5 most popular items" do
+    it "displays top 5 popular items ranked by total revenue generated" do
+      visit "/merchants/#{merchant.id}/items"
+
+      expect(page).to have_content("Top Items")
+      within("#top-five-items") do
+      expect(page).to have_content(item1.name)
+      expect(page).to have_content(item4.name)
+      expect(page).to have_content(item5.name)
+
+      expect(page).to_not have_content(item2.name)
+      expect(page).to_not have_content(item3.name)
+
+      end
+    end
+
+
+  end
 end
