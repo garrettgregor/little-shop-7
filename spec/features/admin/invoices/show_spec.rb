@@ -17,7 +17,7 @@ RSpec.describe 'Admin/invoices show page', type: :feature do
   static_time_2 = Time.zone.parse('2023-03-13 00:50:37')
   static_time_3 = Time.zone.parse('2023-02-13 00:50:37')
 
-  let!(:invoice_1) { create(:invoice, customer_id: customer_1.id) }
+  let!(:invoice_1) { create(:invoice, customer_id: customer_1.id, status: 2) }
   let!(:invoice_2) { create(:invoice, customer_id: customer_2.id) }
   let!(:invoice_3) { create(:invoice, customer_id: customer_3.id) }
   let!(:invoice_4) { create(:invoice, customer_id: customer_4.id) }
@@ -67,7 +67,7 @@ RSpec.describe 'Admin/invoices show page', type: :feature do
 
     it 'should display total revenue of all items on this invoice' do
       visit admin_invoice_path(invoice_1)
-      save_and_open_page
+      
       expect(page).to have_content("Total Revenue: $359.90")
     end
   end
@@ -91,7 +91,20 @@ RSpec.describe 'Admin/invoices show page', type: :feature do
       expect(page).to have_content(invoice_item_10.status)
     end
   end
+
+  describe 'displays a selector for the status that allows for updating the status' do
+    it 'should display a drop down selector to update invoice status' do
+      visit admin_invoice_path(invoice_1)
+      
+      within("#status-selector") do
+        expect(page).to have_button("Update Invoice")
+        expect(page).to have_content("completed")
+      
+        select('cancelled', from: "Status")
+        click_button("Update Invoice")
+
+        expect(page).to have_content("cancelled")
+      end
+    end
+  end
 end
-# As an admin
-# When I visit an admin invoice show page (/admin/invoices/:invoice_id)
-# Then I see the total revenue that will be generated from this invoice.
