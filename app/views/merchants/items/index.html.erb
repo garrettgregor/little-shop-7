@@ -1,5 +1,102 @@
+<style>
+.float-container {
+    border: 3px solid #fff;
+    padding: 20px;
+}
+
+.float-child {
+    width: 50%;
+    float: left;
+    padding: 20px;
+} 
+.header {
+  padding: 30px;
+  text-align: center;
+  background: #B2BEB5;
+  font-size: 30px;
+} 
+
+</style>
+
+
+
 <h1> <%= @merchant.name %> </h1>
 
-<% @merchant.items.each do |item| %>
-  <%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %> <br>
-<% end %>
+<h2 class="header"> My Items </h2>
+<br>
+<%= button_to "Create New Item", new_merchant_item_path(@merchant), method: :get %>
+<br>
+<div class="float-container">
+  <div id="items-column" class="float-child">
+    <div id="enabled-items">
+      <h3>Enabled Items</h3>
+      <% @merchant.enabled_items.each do |item| %>
+      <ul>
+        <li id="merchant-<%= item.id %>">
+        <%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %>
+      <%= form_with url: "/merchants/#{@merchant.id}/items/#{item.id}", method: :patch, local: :true do |f| %>
+        <% if item.status == "disabled" %>
+          <%= f.hidden_field :status, value: "disabled" %>
+          <%= f.radio_button :status, "disabled", checked: true %>
+          <%= f.label :status_disabled, "Disable" %>
+          <br>
+          <%= f.radio_button :status, "enabled" %>
+          <%= f.label :status_enabled, "Enable" %>
+        <% else %>
+          <%= f.hidden_field :status, value: "enabled" %>
+          <%= f.radio_button :status, "disabled" %>
+          <%= f.label :status_disabled, "Disable" %>
+          <br>
+          <%= f.radio_button :status, "enabled", checked: true %>
+          <%= f.label :status_enabled, "Enable" %>
+        <% end %>
+        <br>
+        <%= f.submit "Update" %>
+      <% end %>
+        </li>
+      </ul>
+      <% end %>
+    </div>
+    <div id="disabled-items" class="float-child">
+    <h3>Disabled Items</h3>
+      <% @merchant.disabled_items.each do |item| %>
+        <ul>
+          <li id="merchant-<%= item.id %>">
+          <%= link_to item.name, "/merchants/#{@merchant.id}/items/#{item.id}" %>
+        <%= form_with url: "/merchants/#{@merchant.id}/items/#{item.id}", method: :patch, local: :true do |f| %>
+          <% if item.status == "disabled" %>
+            <%= f.hidden_field :status, value: "disabled" %>
+            <%= f.radio_button :status, "disabled", checked: true %>
+            <%= f.label :status_disabled, "Disable" %>
+            <br>
+            <%= f.radio_button :status, "enabled" %>
+            <%= f.label :status_enabled, "Enable" %>
+          <% else %>
+            <%= f.hidden_field :status, value: "enabled" %>
+            <%= f.radio_button :status, "disabled" %>
+            <%= f.label :status_disabled, "Disable" %>
+            <br>
+            <%= f.radio_button :status, "enabled", checked: true %>
+            <%= f.label :status_enabled, "Enable" %>
+          <% end %>
+          <br>
+          <%= f.submit "Update" %>
+        <% end %>
+          </li>
+        </ul>
+        <% end %>
+    </div>
+  </div>
+
+  <div id=top-five-items>
+    <h3>Top Items</h3>
+    <ul>
+    <% @merchant.top_five_items.each do |item| %>
+      <li><%= link_to item.name, "/merchants/#{@merchant.id}/items/#{item.id}" %> - $<%= item.total_revenue %> in sales</li>
+      <li>  
+      Top day for <%= item.name %> was <%= item.top_selling_date %>
+      </li><br>
+    <% end %>
+    </ul>
+  </div>
+</div>
