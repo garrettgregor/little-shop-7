@@ -63,8 +63,8 @@ RSpec.describe Invoice, type: :model do
       end
     end
   end
-  
-  describe "instance methods" do 
+
+  describe "instance methods" do
     describe "#customer_full_name" do
       it "displays the customer's full name" do
         expect(invoice_1.customer_full_name).to eq("#{customer_1.first_name} #{customer_1.last_name}")
@@ -73,11 +73,11 @@ RSpec.describe Invoice, type: :model do
 
     describe "#total_revenue" do
       it "displays a invoice's total revenue for its items" do
-        expect(invoice_1.total_revenue).to eq("60.0")
+        expect(invoice_1.total_revenue).to eq(60.0)
       end
     end
   end
-  
+
   describe "instance methods" do
     context "#total_revenue" do
       it "returns the total revenue of items on an invoice" do
