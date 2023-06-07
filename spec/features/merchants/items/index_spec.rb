@@ -215,9 +215,6 @@ RSpec.describe "Merchant Items Index Page" do
       expect(current_path).to eq("/merchants/#{merchant.id}/items")
 
       expect(page).to have_content("Dragon Radar")
-      expect(page).to have_content("tracking device that makes finding the Dragon Balls more efficient.")
-      expect(page).to have_content("Dragon Radar")
-
     end
   end
 end

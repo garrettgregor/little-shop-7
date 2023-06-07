@@ -28,6 +28,14 @@ class Merchants::ItemsController < ApplicationController
     @item = Item.new
   end
 
+  def create
+    @merchant = Merchant.find(params[:merchant_id])
+    @item = @merchant.items.create(item_params)
+
+    redirect_to merchant_items_path(@merchant)
+
+  end
+
   private
 
   def item_params
