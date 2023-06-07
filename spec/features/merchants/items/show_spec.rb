@@ -5,7 +5,6 @@ RSpec.describe 'Merchant Items Show Page' do
   let!(:merchant) { create(:merchant, id: 1, name:"Dealer of Death", status: 1 )}
   let!(:merchant2) { create(:merchant, id: 2, name:"Dealer of Life", status: 1 )}
 
-
   let!(:item1) { create(:item, id: 1, merchant_id: 1 )}
   let!(:item2) { create(:item, id: 2, merchant_id: 1 )}
   let!(:item3) { create(:item, id: 3, merchant_id: 1 )}
@@ -131,7 +130,7 @@ RSpec.describe 'Merchant Items Show Page' do
       click_button("Update Item")
 
       expect(current_path).to eq("/merchants/#{merchant.id}/items/#{item1.id}")
-      
+
       expect(page).to have_content("Frieza Pod")
       expect(page).to have_content("floating, egg-shaped vehicle.")
       expect(page).to have_content("$199.00")

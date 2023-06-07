@@ -7,7 +7,7 @@ class UnsplashService
     get_url("https://api.unsplash.com/photos/random?client_id=nJm3PMI0ChpgEr9xIkC_gqCPpvJF3J8mshaK517tRPI&query=#{image}")
   end
 
-  def merchant_image
+  def merchant_url
     get_url("https://api.unsplash.com/photos/random?client_id=5LdyjwQLiAuLrMg_CQSXRjgo3hk9DvIE40lLpY4_nvA")
   end
 
