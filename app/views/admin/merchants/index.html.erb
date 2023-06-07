@@ -17,7 +17,7 @@
 <div id="top-merchants", style="float:right; margin:20px;"><h3 style="background-color:lightgrey;"><center>Top Merchants</h3>
   <ol>
     <% @merchants.each do |merchant| %>
-        <li><%= link_to "#{merchant.name}", admin_merchant_path(merchant) %> </li><br>
+        <li><%= link_to "#{merchant.name}", admin_merchant_path(merchant) %> - <%= number_to_currency(merchant.total_sales) %> in sales </li><br>
     <% end %>
   </ol>
 </div>
