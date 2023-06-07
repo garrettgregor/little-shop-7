@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe Merchant, type: :model do 
-  describe "relationships" do 
+RSpec.describe Merchant, type: :model do
+  describe "relationships" do
     it { should have_many(:items) }
     it { should have_many(:invoice_items).through(:items) }
     it { should have_many(:invoices).through(:invoice_items) }
@@ -9,7 +9,33 @@ RSpec.describe Merchant, type: :model do
     it { should have_many(:transactions).through(:invoices) }
   end
 
-  describe "instance methods" do 
+  describe "class methods" do
+    let!(:merchant_4) { create(:merchant, status: 1) }
+    let!(:merchant_5) { create(:merchant, status: 1) }
+    let!(:merchant_6) { create(:merchant, status: 0) }
+    let!(:merchant_7) { create(:merchant, status: 0) }
+
+    describe "::enabled_merchants" do
+      it "returns a list of the enabled merchants" do
+        expect(Merchant.enabled_merchants).to match_array([merchant_4, merchant_5])
+      end
+    end
+
+    describe "::disabled_merchants" do
+      it "returns a list of the disabled merchants" do
+        expect(Merchant.disabled_merchants).to match_array([merchant_6, merchant_7])
+      end
+    end
+
+    describe "::top_5_merchants" do
+      top_5_admin_merchant_data
+      it "returns a list of the disabled merchants" do
+        expect(Merchant.top_5_merchants).to match_array([merchant_11, merchant_12, merchant_13, merchant_14, merchant_15])
+      end
+    end
+  end
+
+  describe "instance methods" do
     let!(:merchant) { create(:merchant, name:"Dealer of Death", status: 1 )}
     let!(:merchant2) { create(:merchant, name:"Dealer of Life", status: 1 )}
 
@@ -38,7 +64,7 @@ RSpec.describe Merchant, type: :model do
     let!(:invoice_item7) { create(:invoice_item, id: 7, status: 2, item_id: items_m2[4].id, invoice_id: invoice7.id )}
     let!(:invoice_item8) { create(:invoice_item, id: 8, status: 1, item_id: items_m2[3].id, invoice_id: invoice8.id )}
 
-    describe "#not_shipped_items" do 
+    describe "#not_shipped_items" do
       it "displays the not yet shipped items ordered by least recent invoice creation date" do
         expect(merchant.not_shipped_items).to eq([invoice1, invoice2, invoice3])
         expect(merchant2.not_shipped_items).to eq([invoice5, invoice8])
@@ -174,4 +200,5 @@ RSpec.describe Merchant, type: :model do
       end
     end
   end
+
 end

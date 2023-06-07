@@ -16,6 +16,7 @@ RSpec.describe Invoice, type: :model do
   static_time_1 = Time.zone.parse('2023-04-13 00:50:37')
   static_time_2 = Time.zone.parse('2023-03-13 00:50:37')
   static_time_3 = Time.zone.parse('2023-02-13 00:50:37')
+  static_time_4 = Time.zone.parse('2023-01-13 00:50:37')
 
   let!(:invoice_1) { create(:invoice, customer_id: customer_1.id) }
   let!(:invoice_2) { create(:invoice, customer_id: customer_2.id) }
@@ -28,16 +29,17 @@ RSpec.describe Invoice, type: :model do
   let!(:invoice_9) { create(:invoice, customer_id: customer_7.id, created_at: static_time_2) }
   let!(:invoice_10) { create(:invoice, customer_id: customer_7.id, created_at: static_time_3) }
 
-  let!(:invoice_item_1) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[0].id, status: 1 ) }
-  let!(:invoice_item_2) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[1].id, status: 1 ) }
-  let!(:invoice_item_3) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[2].id, status: 0 ) }
-  let!(:invoice_item_4) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[3].id, status: 0 ) }
-  let!(:invoice_item_5) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[4].id, status: 2 ) }
+  let!(:invoice_item_1) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[0].id, status: 1, quantity: 10, unit_price: 5000 ) }
+  let!(:invoice_item_2) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[1].id, status: 1, quantity: 10, unit_price: 5000 ) }
+  let!(:invoice_item_3) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[2].id, status: 0, quantity: 10, unit_price: 5000 ) }
+  let!(:invoice_item_4) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[3].id, status: 0, quantity: 10, unit_price: 5000 ) }
+  let!(:invoice_item_5) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[4].id, status: 2, quantity: 10, unit_price: 5000 ) }
   let!(:invoice_item_6) { create(:invoice_item, invoice_id: invoice_8.id, item_id: items_m1[4].id, status: 2 ) }
-  let!(:invoice_item_7) { create(:invoice_item, invoice_id: invoice_9.id, item_id: items_m1[3].id, status: 0 ) }
-  let!(:invoice_item_8) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[4].id, status: 0 ) }
-  let!(:invoice_item_9) { create(:invoice_item, invoice_id: invoice_9.id, item_id: items_m1[4].id, status: 0 ) }
+  let!(:invoice_item_7) { create(:invoice_item, invoice_id: invoice_9.id, item_id: items_m1[3].id, status: 0, quantity: 10, unit_price: 5000 ) }
+  let!(:invoice_item_8) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[4].id, status: 0, quantity: 10, unit_price: 5000 ) }
+  let!(:invoice_item_9) { create(:invoice_item, invoice_id: invoice_9.id, item_id: items_m1[4].id, status: 0, quantity: 1, unit_price: 49999 ) }
   let!(:invoice_item_10) { create(:invoice_item, invoice_id: invoice_10.id, item_id: items_m1[4].id, status: 0 ) }
+  let!(:invoice_item_11) { create(:invoice_item, item_id: items_m1[4].id, invoice_id: invoice_1.id, status: 0, unit_price: 2000, quantity: 3) }
 
   let!(:trans_1_s) { create_list(:transaction, 1, result: 1, invoice_id: invoice_1.id) }
   let!(:trans_2_s) { create_list(:transaction, 2, result: 1, invoice_id: invoice_2.id) }
@@ -57,7 +59,30 @@ RSpec.describe Invoice, type: :model do
   describe "class methods" do
     context "::sorted_incomplete_invoices" do
       it "returns all incomplete invoices grouped by invoice sorted oldest to newest" do
-        expect(Invoice.sorted_incomplete_invoices).to eq([invoice_10, invoice_9, invoice_7])
+        expect(Invoice.sorted_incomplete_invoices).to eq([invoice_10, invoice_9, invoice_7, invoice_1])
+      end
+    end
+  end
+  
+  describe "instance methods" do 
+    describe "#customer_full_name" do
+      it "displays the customer's full name" do
+        expect(invoice_1.customer_full_name).to eq("#{customer_1.first_name} #{customer_1.last_name}")
+      end
+    end
+
+    describe "#total_revenue" do
+      it "displays a invoice's total revenue for its items" do
+        expect(invoice_1.total_revenue).to eq("60.0")
+      end
+    end
+  end
+  
+  describe "instance methods" do
+    context "#total_revenue" do
+      it "returns the total revenue of items on an invoice" do
+        expect(invoice_9.total_revenue).to eq(999.99)
+        expect(invoice_7.total_revenue).to eq(3000.00)
       end
     end
   end
