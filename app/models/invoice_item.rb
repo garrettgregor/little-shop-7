@@ -5,6 +5,6 @@ class InvoiceItem < ApplicationRecord
   enum :status, [:pending, :packaged, :shipped]
 
   def cents_to_dollar
-    unit_price/100
+    unit_price/100.00
   end
 end
