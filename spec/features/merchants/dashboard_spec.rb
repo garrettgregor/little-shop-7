@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Merchant Dashboard" do 
+RSpec.describe "Merchant Dashboard" do
   describe "It shows the merchant dashboard" do
     let!(:merchant) { create(:merchant, id: 1, name:"Dealer of Death", status: 1 )}
     let!(:merchant2) { create(:merchant, id: 2, name:"Dealer of Life", status: 1 )}
@@ -99,7 +99,7 @@ RSpec.describe "Merchant Dashboard" do
       expect(page).to have_content("Dealer of Death")
     end
 
-    it "has links to invoices index" do 
+    it "has links to invoices index" do
       visit "/merchants/#{merchant.id}/dashboard"
 
       expect(page).to have_link("My Invoices")
@@ -152,7 +152,6 @@ RSpec.describe "Merchant Dashboard" do
       expect(page).to have_content("#{item2.invoice_items.first.invoice.id}")
       expect(page).to have_content("#{item3.invoice_items.first.invoice.id}")
       expect(page).to have_content("#{item5.invoice_items.first.invoice.id}")
-      # refactor within blocks so we can test not_have content
     end
 
     it "displays Invoices sorted by least recent with date next to ID " do
