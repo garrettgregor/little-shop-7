@@ -5,6 +5,14 @@ class Admin::MerchantsController < ApplicationController
     @disabled_merchants = Merchant.disabled_merchants
   end
 
+  def new
+  end
+
+  def create
+    Merchant.create!(merchant_params)
+    redirect_to(admin_merchants_path)
+  end
+
   def show
     @merchant = Merchant.find(params[:id])
   end
