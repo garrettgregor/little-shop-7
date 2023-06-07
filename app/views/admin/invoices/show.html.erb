@@ -6,6 +6,7 @@
 
 <ul>Status:<%= @invoice.status %></ul>
 <ul>Created on: <%= @invoice.format_time_stamp %></ul>
+<ul>Total Revenue: <%= number_to_currency(@invoice.total_revenue) %></ul>
 
 <ul><h2>Customer:</h2>
   <ul><%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></ul>

@@ -13,4 +13,15 @@ class Invoice < ApplicationRecord
     .group(:id)
     .order(:created_at)
   end
+
+
+
+
+
+  
+  
+  
+  def total_revenue
+    invoice_items.sum("invoice_items.quantity * invoice_items.unit_price")/100.00
+  end
 end
