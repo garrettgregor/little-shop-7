@@ -7,5 +7,4 @@ class LogoSearch
   def service
     UnsplashService.new
   end
-
 end

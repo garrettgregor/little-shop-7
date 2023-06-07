@@ -98,7 +98,7 @@ RSpec.describe 'Merchant Items Show Page' do
 
       expect(page).to have_content(item1.name)
       expect(page).to have_content(item1.description)
-      expect(page).to have_content(item1.unit_price)
+      expect(page).to have_content(item1.unit_price/100.00)
 
       expect(page).to_not have_content(item2.name)
       expect(page).to_not have_content(item2.unit_price)
@@ -109,7 +109,7 @@ RSpec.describe 'Merchant Items Show Page' do
 
       expect(page).to have_content(item2.name)
       expect(page).to have_content(item2.description)
-      expect(page).to have_content(item2.unit_price)
+      expect(page).to have_content(item2.unit_price/100.00)
 
       expect(page).to_not have_content(item1.name)
       expect(page).to_not have_content(item1.unit_price)
@@ -127,14 +127,14 @@ RSpec.describe 'Merchant Items Show Page' do
 
       fill_in(:name, with: "Frieza Pod")
       fill_in(:description, with: "floating, egg-shaped vehicle.")
-      fill_in(:unit_price, with: 19990)
+      fill_in(:unit_price, with: 19900)
       click_button("Update Item")
 
       expect(current_path).to eq("/merchants/#{merchant.id}/items/#{item1.id}")
-
+      
       expect(page).to have_content("Frieza Pod")
       expect(page).to have_content("floating, egg-shaped vehicle.")
-      expect(page).to have_content(19990)
+      expect(page).to have_content("$199.00")
 
     end
   end
