@@ -3,8 +3,15 @@
 <br><br>
 
 <br><br><h2 style="background-color:lightgrey; border-top: 3px solid black; padding:10px; margin:20px;"><center>Invoice #<%= "#{@invoice.id}" %></center></h2>
-
-<ul>Status:<%= @invoice.status %></ul>
+<section id="status-selector">
+<ul>
+<%= form_with model: @invoice, url: admin_invoice_path(@invoice) do |f| %>
+  <%= f.label :status, "Status:" %>
+  <%= f.select :status, options_for_select(["cancelled", "in progress", "completed"]) %>
+  <%= f.submit "Update Invoice", style: "font-size:18px;" %>
+<% end %>
+</ul>
+</section>
 <ul>Created on: <%= @invoice.format_time_stamp %></ul>
 <ul>Total Revenue: <%= number_to_currency(@invoice.total_revenue) %></ul>
 
