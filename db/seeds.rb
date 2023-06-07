@@ -12,12 +12,3 @@ Item.destroy_all
 Invoice.destroy_all
 Merchant.destroy_all
 Customer.destroy_all
-
-
-merchant_1 = Merchant.create!(name: "Amazon", status: 0)
-merchant_2 = Merchant.create!(name: "Target", status: 0)
-merchant_3 = Merchant.create!(name: "King Soopers", status: 0)
-merchant_4 = Merchant.create!(name: "Merchant 4", status: 1)
-merchant_5 = Merchant.create!(name: "Merchant 5", status: 1)
-merchant_6 = Merchant.create!(name: "Merchant 6", status: 0)
-merchant_7 = Merchant.create!(name: "Merchant 7", status: 0)
