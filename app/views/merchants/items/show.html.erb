@@ -1,6 +1,15 @@
+<style>
+.header {
+  padding: 30px;
+  text-align: center;
+  background: #B2BEB5;
+  font-size: 30px;
+}
+</style>
+
 <h2> <%= @merchant.name %> </h2>
 
-<h3><%= @item.name %></h3>
+<h3 class="header"><%= @item.name %></h3>
 <p>Desciption: <%= @item.description %></p>
 <p>Current Price: <%= @item.unit_price %> </p>
 <%= button_to 'Update Item', "/merchants/#{@merchant.id}/items/#{@item.id}/edit", method: :get %>

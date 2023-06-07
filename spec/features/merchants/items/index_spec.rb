@@ -5,11 +5,11 @@ RSpec.describe "Merchant Items Index Page" do
   let!(:merchant2) { create(:merchant, id: 2, name:"Dealer of Life", status: 1 )}
 
 
-  let!(:item1) { create(:item, id: 1, merchant_id: 1, status: 1 )}
-  let!(:item2) { create(:item, id: 2, merchant_id: 1, status: 0 )}
-  let!(:item3) { create(:item, id: 3, merchant_id: 1, status: 0)}
-  let!(:item4) { create(:item, id: 4, merchant_id: 1, status: 1 )}
-  let!(:item5) { create(:item, id: 5, merchant_id: 1, status: 1 )}
+  let!(:item1) { create(:item, id: 1, merchant_id: 1, status: 1, name: "Mediocre Concrete Bench" )}
+  let!(:item2) { create(:item, id: 2, merchant_id: 1, status: 0, name: "Ballpoint Pen" )}
+  let!(:item3) { create(:item, id: 3, merchant_id: 1, status: 0, name: "Frieza Pod" )}
+  let!(:item4) { create(:item, id: 4, merchant_id: 1, status: 1, name: "Heavy Duty Leather Pants" )}
+  let!(:item5) { create(:item, id: 5, merchant_id: 1, status: 1, name: "Durable Marble Hat" )}
 
   let!(:item6) { create(:item, id: 6, merchant_id: 2 )}
   let!(:item7) { create(:item, id: 7, merchant_id: 2 )}
@@ -45,28 +45,28 @@ RSpec.describe "Merchant Items Index Page" do
 
   let!(:invoice17) { create(:invoice, id: 17, created_at: "2012-01-06 09:54:09 UTC", customer_id: customer5.id )}
 
-  let!(:invoice_item1) { create(:invoice_item, id: 1, status: 0,  item_id: item1.id, invoice_id: invoice1.id )}
-  let!(:invoice_item2) { create(:invoice_item, id: 2, status: 1, item_id: item1.id, invoice_id: invoice2.id )}
-  let!(:invoice_item3) { create(:invoice_item, id: 3, status: 1, item_id: item1.id, invoice_id: invoice3.id )}
-  let!(:invoice_item4) { create(:invoice_item, id: 4, status: 2, item_id: item6.id, invoice_id: invoice4.id )}
+  let!(:invoice_item1) { create(:invoice_item, id: 1, status: 0,  item_id: item1.id, invoice_id: invoice1.id, unit_price: 1000, quantity: 25)}
+  let!(:invoice_item2) { create(:invoice_item, id: 2, status: 1, item_id: item1.id, invoice_id: invoice2.id, unit_price: 2500, quantity: 50 )}
+  let!(:invoice_item3) { create(:invoice_item, id: 3, status: 1, item_id: item1.id, invoice_id: invoice3.id, unit_price: 750, quantity: 35 )}
+  let!(:invoice_item4) { create(:invoice_item, id: 4, status: 2, item_id: item6.id, invoice_id: invoice4.id, unit_price: 1500, quantity: 15 )}
 
-  let!(:invoice_item5) { create(:invoice_item, id: 5, status: 0, item_id: item2.id, invoice_id: invoice5.id )}
-  let!(:invoice_item6) { create(:invoice_item, id: 6, status: 2, item_id: item6.id, invoice_id: invoice6.id )}
-  let!(:invoice_item7) { create(:invoice_item, id: 7, status: 2, item_id: item7.id, invoice_id: invoice7.id )}
-  let!(:invoice_item8) { create(:invoice_item, id: 8, status: 1, item_id: item2.id, invoice_id: invoice8.id )}
+  let!(:invoice_item5) { create(:invoice_item, id: 5, status: 0, item_id: item2.id, invoice_id: invoice5.id, unit_price: 6500, quantity: 5 )}
+  let!(:invoice_item6) { create(:invoice_item, id: 6, status: 2, item_id: item6.id, invoice_id: invoice6.id, unit_price: 8400, quantity: 9 )}
+  let!(:invoice_item7) { create(:invoice_item, id: 7, status: 2, item_id: item7.id, invoice_id: invoice7.id, unit_price: 8500, quantity: 11 )}
+  let!(:invoice_item8) { create(:invoice_item, id: 8, status: 1, item_id: item2.id, invoice_id: invoice8.id, unit_price: 1453, quantity: 25 )}
 
-  let!(:invoice_item9) { create(:invoice_item, id: 9, status: 0, item_id: item3.id, invoice_id: invoice9.id )}
-  let!(:invoice_item10) { create(:invoice_item, id: 10, status: 1, item_id: item3.id, invoice_id: invoice10.id )}
-  let!(:invoice_item11) { create(:invoice_item, id: 11, status: 1, item_id: item3.id, invoice_id: invoice11.id )}
-  let!(:invoice_item12) { create(:invoice_item, id: 12, status: 2, item_id: item7.id, invoice_id: invoice12.id )}
+  let!(:invoice_item9) { create(:invoice_item, id: 9, status: 0, item_id: item3.id, invoice_id: invoice9.id, unit_price: 950, quantity: 100 )}
+  let!(:invoice_item10) { create(:invoice_item, id: 10, status: 1, item_id: item3.id, invoice_id: invoice10.id, unit_price: 8342, quantity: 25 )}
+  let!(:invoice_item11) { create(:invoice_item, id: 11, status: 1, item_id: item3.id, invoice_id: invoice11.id, unit_price: 990, quantity: 250 )}
+  let!(:invoice_item12) { create(:invoice_item, id: 12, status: 2, item_id: item7.id, invoice_id: invoice12.id, unit_price: 9990, quantity: 25 )}
 
-  let!(:invoice_item13) { create(:invoice_item, id: 13, status: 2, item_id: item7.id, invoice_id: invoice13.id )}
-  let!(:invoice_item14) { create(:invoice_item, id: 14, status: 1, item_id: item4.id, invoice_id: invoice14.id)}
+  let!(:invoice_item13) { create(:invoice_item, id: 13, status: 2, item_id: item7.id, invoice_id: invoice13.id, unit_price: 4000, quantity: 55 )}
+  let!(:invoice_item14) { create(:invoice_item, id: 14, status: 1, item_id: item4.id, invoice_id: invoice14.id, unit_price: 550, quantity: 55)}
 
-  let!(:invoice_item15) { create(:invoice_item, id: 15, status: 1, item_id: item5.id, invoice_id: invoice15.id )}
-  let!(:invoice_item16) { create(:invoice_item, id: 16, status: 2, item_id: item6.id, invoice_id: invoice16.id )}
+  let!(:invoice_item15) { create(:invoice_item, id: 15, status: 1, item_id: item5.id, invoice_id: invoice15.id, unit_price: 7500, quantity: 15 )}
+  let!(:invoice_item16) { create(:invoice_item, id: 16, status: 2, item_id: item6.id, invoice_id: invoice16.id, unit_price: 100000, quantity: 25 )}
 
-  let!(:invoice_item17) { create(:invoice_item, id: 17, status: 2, item_id: item6.id, invoice_id: invoice17.id )}
+  let!(:invoice_item17) { create(:invoice_item, id: 17, status: 2, item_id: item6.id, invoice_id: invoice17.id, unit_price: 2900, quantity: 250 )}
 
   let!(:transaction1) { create(:transaction, id: 1, result: 1, invoice_id: invoice1.id )}
   let!(:transaction2) { create(:transaction, id: 2, result: 1, invoice_id: invoice2.id )}
@@ -155,6 +155,113 @@ RSpec.describe "Merchant Items Index Page" do
         expect(current_path).to eq("/merchants/#{merchant.id}/items")
         expect(page).to_not have_checked_field("Enable")
         expect(page).to have_checked_field("Disable")
+      end
+    end
+  end
+
+  describe "Merchant Items Grouped by Status" do
+    it "displays enabled sections for items with status as enabled" do
+      visit "/merchants/#{merchant.id}/items"
+
+      expect(page).to have_content("Enabled Items")
+
+      within("#enabled-items") do
+        expect(page).to have_content(item1.name)
+        expect(page).to have_content(item4.name)
+        expect(page).to have_content(item5.name)
+
+        expect(page).to_not have_content(item2.name)
+        expect(page).to_not have_content(item3.name)
+      end
+    end
+
+    it "displays disabled sections for items with status as disabled" do
+      visit "/merchants/#{merchant.id}/items"
+
+      expect(page).to have_content("Disabled Items")
+
+      within("#disabled-items") do
+        expect(page).to have_content(item2.name)
+        expect(page).to have_content(item3.name)  
+
+        expect(page).to_not have_content(item1.name)
+        expect(page).to_not have_content(item4.name)
+        expect(page).to_not have_content(item5.name)
+      end
+    end
+  end
+
+  describe "Merchant Item Create" do
+    it "displays link to create new item" do
+      visit "/merchants/#{merchant.id}/items"
+
+      expect(page).to have_button("Create New Item")
+
+      click_button("Create New Item")
+
+      expect(current_path).to eq("/merchants/#{merchant.id}/items/new")
+    end
+
+    it "creates new item and redirects back to items index page with disabled status" do
+      visit "/merchants/#{merchant.id}/items"
+      
+      click_button("Create New Item")
+
+      fill_in(:name, with: "Dragon Radar")
+      fill_in(:description, with: "tracking device that makes finding the Dragon Balls more efficient.")
+      fill_in(:unit_price, with: 3412389)
+      click_button("Create Item")
+
+      expect(current_path).to eq("/merchants/#{merchant.id}/items")
+
+      expect(page).to have_content("Dragon Radar")
+    end
+  end
+
+  describe "Merchant Items Index: 5 most popular items" do
+    it "displays top 5 popular items ranked by total revenue generated" do
+      visit "/merchants/#{merchant.id}/items"
+
+      expect(page).to have_content("Top Items")
+
+      within("#top-five-items") do
+        expect(page).to have_content(item3.name)
+        expect(page).to have_content(item1.name)
+        expect(page).to have_content(item5.name)
+        expect(page).to have_content(item2.name)
+        expect(page).to have_content(item4.name)
+
+        expect(page).to have_content(342500)
+        expect(page).to have_content(176250)
+        expect(page).to have_content(112500)
+        expect(page).to have_content(68825)
+        expect(page).to have_content(30250)
+
+        expect(page).to_not have_content(item6.name)
+        expect(page).to_not have_content(item7.name)
+
+        expect(item3.name).to appear_before(item1.name)
+        expect(item1.name).to appear_before(item5.name)
+        expect(item5.name).to appear_before(item2.name)
+        expect(item2.name).to appear_before(item4.name)
+
+        expect("342500").to appear_before("176250")
+        expect("176250").to appear_before("112500")
+        expect("112500").to appear_before("68825")
+        expect("68825").to appear_before("30250")
+      end
+    end
+
+    describe "Merchant Items Index: Top Item's Best Day" do
+      it "displays date with the most sales for each item" do
+        visit "/merchants/#{merchant.id}/items"
+
+        expect(page).to have_content("Top day for Frieza Pod was Sunday, November 25, 2012")
+        expect(page).to have_content("Top day for Mediocre Concrete Bench was Friday, May 25, 2012")
+        expect(page).to have_content("Top day for Durable Marble Hat was Wednesday, June 20, 2012")
+        expect(page).to have_content("Top day for Ballpoint Pen was Wednesday, December 25, 2013")
+        expect(page).to have_content("Top day for Heavy Duty Leather Pants was Saturday, August 25, 2012")
+
       end
     end
   end
