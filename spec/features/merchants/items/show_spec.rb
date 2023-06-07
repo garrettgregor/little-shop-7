@@ -123,15 +123,15 @@ RSpec.describe 'Merchant Items Show Page' do
       expect(page).to have_button("Update Item")
       click_button("Update Item")
 
-      # current_path("/merchants/#{merchant.id}/items/#{item1.id}/edit")
+      expect(current_path).to eq("/merchants/#{merchant.id}/items/#{item1.id}/edit")
 
       fill_in(:name, with: "Frieza Pod")
       fill_in(:description, with: "floating, egg-shaped vehicle.")
       fill_in(:unit_price, with: 19990)
       click_button("Update Item")
 
-      # current_path "/merchants/#{merchant.id}/items/#{item1.id}/edit" 
-# save_and_open_page
+      expect(current_path).to eq("/merchants/#{merchant.id}/items/#{item1.id}")
+
       expect(page).to have_content("Frieza Pod")
       expect(page).to have_content("floating, egg-shaped vehicle.")
       expect(page).to have_content(19990)
