@@ -37,7 +37,7 @@
     <% @merchant.disabled_items.each do |item| %>
       <ul>
         <li id="merchant-<%= item.id %>">
-        <%= link_to "#{item.name}", "/merchants/#{@merchant.id}/items/#{item.id}" %>
+        <%= link_to item.name, "/merchants/#{@merchant.id}/items/#{item.id}" %>
       <%= form_with url: "/merchants/#{@merchant.id}/items/#{item.id}", method: :patch, local: :true do |f| %>
         <% if item.status == "disabled" %>
           <%= f.hidden_field :status, value: "disabled" %>
@@ -61,4 +61,16 @@
       </ul>
       <% end %>
   </div>
+</div>
+
+<div id=top-five-items>
+  <h3>Top Items</h3>
+  <ul>
+  <% @merchant.top_five_items.each do |item| %>
+    <li><%= link_to item.name, "/merchants/#{@merchant.id}/items/#{item.id}" %> - $<%= item.total_revenue %> in sales</li>
+  <% end %>
+  </ul>
+
+
+
 </div>
