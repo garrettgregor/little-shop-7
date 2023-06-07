@@ -6,15 +6,15 @@ Rails.application.routes.draw do
   get "/", to: "application#welcome"
   
   get "/merchants/:id/dashboard", to: "merchants#show"
-
-  resources :merchants, only: [:show]  do
+  
+  resources :merchants, only: [:show] do
     resources :items, only: [:index, :show, :edit, :update, :new, :create], controller: "merchants/items"
+    resources :invoices, only: [:index, :show], controller: "merchant/invoices"
   end
-
-  get "/admin", to: "admin#index"
-
+  
+  resources :admin, only: [:index]
   namespace :admin do
     resources :merchants, only: [:index]
-    resources :invoices, only: [:index]
+    resources :invoices, only: [:index, :show]
   end
 end
