@@ -5,11 +5,11 @@ RSpec.describe "Merchant Items Index Page" do
   let!(:merchant2) { create(:merchant, id: 2, name:"Dealer of Life", status: 1 )}
 
 
-  let!(:item1) { create(:item, id: 1, merchant_id: 1 )}
-  let!(:item2) { create(:item, id: 2, merchant_id: 1 )}
-  let!(:item3) { create(:item, id: 3, merchant_id: 1 )}
-  let!(:item4) { create(:item, id: 4, merchant_id: 1 )}
-  let!(:item5) { create(:item, id: 5, merchant_id: 1 )}
+  let!(:item1) { create(:item, id: 1, merchant_id: 1, status: 1 )}
+  let!(:item2) { create(:item, id: 2, merchant_id: 1, status: 0 )}
+  let!(:item3) { create(:item, id: 3, merchant_id: 1, status: 0)}
+  let!(:item4) { create(:item, id: 4, merchant_id: 1, status: 1 )}
+  let!(:item5) { create(:item, id: 5, merchant_id: 1, status: 1 )}
 
   let!(:item6) { create(:item, id: 6, merchant_id: 2 )}
   let!(:item7) { create(:item, id: 7, merchant_id: 2 )}
@@ -102,6 +102,60 @@ RSpec.describe "Merchant Items Index Page" do
 
       expect(page).to_not have_content(item6.name)
       expect(page).to_not have_content(item7.name)
+    end
+
+    it "has link to to item show page" do
+      visit "/merchants/#{merchant.id}/items"
+
+      within("#items-column") do
+        expect(page).to have_link(item1.name)
+        expect(page).to have_link(item2.name)
+        expect(page).to have_link(item3.name)
+        expect(page).to have_link(item4.name)
+
+        expect(page).to_not have_link(item6.name)
+        expect(page).to_not have_link(item7.name)
+      end
+
+    end
+  end
+
+  describe "Merchant Item Disable/Enable" do
+    it "has disable or enable button next to each item" do
+      visit "/merchants/#{merchant.id}/items"
+
+      within("li#merchant-#{item1.id}") do
+        expect(page).to have_checked_field("Enable")
+        expect(page).to_not have_checked_field("Disable")
+      end
+
+      within("li#merchant-#{item4.id}") do
+        expect(page).to have_checked_field("Enable")
+        expect(page).to_not have_checked_field("Disable")
+      end
+
+      within("li#merchant-#{item2.id}") do
+        expect(page).to_not have_checked_field("Enable")
+        expect(page).to have_checked_field("Disable")
+      end
+
+      within("li#merchant-#{item3.id}") do
+        expect(page).to_not have_checked_field("Enable")
+        expect(page).to have_checked_field("Disable")
+      end
+    end
+
+    it "when button is clicked item status is changed and page is refreshed with update" do
+      visit "/merchants/#{merchant.id}/items"
+
+      within("li#merchant-#{item1.id}") do
+        expect(page).to have_checked_field("Enable")
+        expect(page).to_not have_checked_field("Disable")
+        choose("Disable")
+        expect(current_path).to eq("/merchants/#{merchant.id}/items")
+        expect(page).to_not have_checked_field("Enable")
+        expect(page).to have_checked_field("Disable")
+      end
     end
   end
 end

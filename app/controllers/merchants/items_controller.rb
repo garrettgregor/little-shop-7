@@ -19,7 +19,8 @@ class Merchants::ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @item.update(item_params)
 
-    redirect_to merchant_item_path    
+    redirect_to merchant_item_path(@merchant, @item) if item_params[:name].present?
+    redirect_to merchant_items_path(@merchant) if item_params[:status].present?
   end
 
   private
