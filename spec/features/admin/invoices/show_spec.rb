@@ -34,10 +34,10 @@ RSpec.describe 'Admin/invoices show page', type: :feature do
   let!(:invoice_item_4) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[3].id, status: 0 ) }
   let!(:invoice_item_5) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[4].id, status: 2 ) }
   let!(:invoice_item_6) { create(:invoice_item, invoice_id: invoice_8.id, item_id: items_m1[4].id, status: 2 ) }
-  let!(:invoice_item_7) { create(:invoice_item, invoice_id: invoice_1.id, item_id: items_m1[3].id, status: 0 ) }
+  let!(:invoice_item_7) { create(:invoice_item, invoice_id: invoice_1.id, item_id: items_m1[3].id, status: 0, unit_price: 6000, quantity: 3 ) } #18000 = 180.00
   let!(:invoice_item_8) { create(:invoice_item, invoice_id: invoice_7.id, item_id: items_m1[4].id, status: 0 ) }
-  let!(:invoice_item_9) { create(:invoice_item, invoice_id: invoice_1.id, item_id: items_m1[4].id, status: 1 ) } 
-  let!(:invoice_item_10) { create(:invoice_item, invoice_id: invoice_1.id, item_id: items_m1[2].id, status: 0 ) }
+  let!(:invoice_item_9) { create(:invoice_item, invoice_id: invoice_1.id, item_id: items_m1[4].id, status: 1, unit_price: 15000, quantity: 1 ) } #150.00 
+  let!(:invoice_item_10) { create(:invoice_item, invoice_id: invoice_1.id, item_id: items_m1[2].id, status: 0, unit_price: 299, quantity: 10 ) } #29.90 total=359.90
 
   let!(:trans_1_s) { create_list(:transaction, 1, result: 1, invoice_id: invoice_1.id) }
   let!(:trans_2_s) { create_list(:transaction, 2, result: 1, invoice_id: invoice_2.id) }
@@ -64,6 +64,12 @@ RSpec.describe 'Admin/invoices show page', type: :feature do
       expect(page).to_not have_content(customer_2.first_name)
       expect(page).to_not have_content(customer_2.last_name)
     end
+
+    it 'should display total revenue of all items on this invoice' do
+      visit admin_invoice_path(invoice_1)
+      save_and_open_page
+      expect(page).to have_content("Total Revenue: $359.90")
+    end
   end
 
   describe 'displays a section for items on this invoice with attributes' do
@@ -86,3 +92,6 @@ RSpec.describe 'Admin/invoices show page', type: :feature do
     end
   end
 end
+# As an admin
+# When I visit an admin invoice show page (/admin/invoices/:invoice_id)
+# Then I see the total revenue that will be generated from this invoice.
