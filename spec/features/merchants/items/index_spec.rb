@@ -236,7 +236,6 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content(112500)
         expect(page).to have_content(68825)
         expect(page).to have_content(30250)
-save_and_open_page
 
         expect(page).to_not have_content(item6.name)
         expect(page).to_not have_content(item7.name)
@@ -250,10 +249,20 @@ save_and_open_page
         expect("176250").to appear_before("112500")
         expect("112500").to appear_before("68825")
         expect("68825").to appear_before("30250")
-
       end
     end
 
+    describe "Merchant Items Index: Top Item's Best Day" do
+      it "displays date with the most sales for each item" do
+        visit "/merchants/#{merchant.id}/items"
 
+        expect(page).to have_content("Top day for Frieza Pod was Sunday, November 25, 2012")
+        expect(page).to have_content("Top day for Mediocre Concrete Bench was Friday, May 25, 2012")
+        expect(page).to have_content("Top day for Durable Marble Hat was Wednesday, June 20, 2012")
+        expect(page).to have_content("Top day for Ballpoint Pen was Wednesday, December 25, 2013")
+        expect(page).to have_content("Top day for Heavy Duty Leather Pants was Saturday, August 25, 2012")
+
+      end
+    end
   end
 end
