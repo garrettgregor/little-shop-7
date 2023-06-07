@@ -183,11 +183,41 @@ RSpec.describe "Merchant Items Index Page" do
       within("#disabled-items") do
         expect(page).to have_content(item2.name)
         expect(page).to have_content(item3.name)  
-      save_and_open_page
+
         expect(page).to_not have_content(item1.name)
         expect(page).to_not have_content(item4.name)
         expect(page).to_not have_content(item5.name)
       end
+    end
+  end
+
+  describe "Merchant Item Create" do
+    it "displays link to create new item" do
+      visit "/merchants/#{merchant.id}/items"
+
+      expect(page).to have_button("Create New Item")
+
+      click_button("Create New Item")
+
+      expect(current_path).to eq("/merchants/#{merchant.id}/items/new")
+    end
+
+    it "creates new item and redirects back to items index page with disabled status" do
+      visit "/merchants/#{merchant.id}/items"
+      
+      click_button("Create New Item")
+
+      fill_in(:name, with: "Dragon Radar")
+      fill_in(:description, with: "tracking device that makes finding the Dragon Balls more efficient.")
+      fill_in(:unit_price, with: 3412389)
+      click_button("Create Item")
+
+      expect(current_path).to eq("/merchants/#{merchant.id}/items")
+
+      expect(page).to have_content("Dragon Radar")
+      expect(page).to have_content("tracking device that makes finding the Dragon Balls more efficient.")
+      expect(page).to have_content("Dragon Radar")
+
     end
   end
 end
