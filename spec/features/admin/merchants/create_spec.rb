@@ -7,7 +7,6 @@ RSpec.describe "admin merchant create", type: :feature do
     describe "I am taken to a form" do
       it "creates a new merchant and takes me to the admin merchants index" do
         visit new_admin_merchant_path
-        save_and_open_page
 
         expect(Merchant.last).to eq(merchant_7)
 
@@ -15,7 +14,6 @@ RSpec.describe "admin merchant create", type: :feature do
         click_button("Submit")
 
         expect(current_path).to eq(admin_merchants_path)
-        save_and_open_page
 
         expect(Merchant.last.name).to eq("Created Merchant")
         expect(Merchant.last.status).to eq("disabled")
