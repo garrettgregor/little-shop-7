@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get "/merchants/:id/dashboard", to: "merchants#show"
 
   resources :merchants, only: [:show] do
-    resources :items, only: [:index, :show], controller: "merchants/items"
+    resources :items, only: [:index, :show, :edit, :update], controller: "merchants/items"
   end
 
   get "/admin", to: "admin#index"
