@@ -87,7 +87,7 @@ RSpec.describe "/admin", type: :feature do
 
     it "should list invoice dates and sort them by oldest to newest" do
       visit admin_index_path
-
+      
       within "#incomplete-invoices" do
         expect(invoice_10.format_time_stamp).to appear_before(invoice_9.format_time_stamp)
         expect(invoice_9.format_time_stamp).to appear_before(invoice_7.format_time_stamp)
