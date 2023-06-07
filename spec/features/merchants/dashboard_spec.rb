@@ -157,7 +157,7 @@ RSpec.describe "Merchant Dashboard" do
 
     it "displays Invoices sorted by least recent with date next to ID " do
       visit "/merchants/#{merchant.id}/dashboard"
-      
+
       expect("Wednesday, January 25, 2012").to appear_before("Sunday, March 25, 2012")
       expect("Sunday, March 25, 2012").to appear_before("Wednesday, April 25, 2012")
       expect("Wednesday, April 25, 2012").to appear_before("Friday, May 25, 2012")
