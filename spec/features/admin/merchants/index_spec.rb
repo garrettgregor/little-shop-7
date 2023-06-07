@@ -67,6 +67,14 @@ RSpec.describe "admin merchants index", type: :feature do
 
         expect(merchant_6.status).to eq("disabled")
       end
+
+      it "has a link to and can create a new merchant" do
+        visit admin_merchants_path
+
+        within "#new-merchant" do
+          expect(page).to have_link("New Merchant", :href => new_admin_merchant_path)
+        end
+      end
     end
   end
 end
