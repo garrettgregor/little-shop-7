@@ -13,7 +13,3 @@
 <p>Desciption: <%= @item.description %></p>
 <p>Current Price: <%= number_to_currency(@item.unit_price/100.00) %> </p>
 <%= button_to 'Update Item', "/merchants/#{@merchant.id}/items/#{@item.id}/edit", method: :get %>
-
-<!--// As a visitor or an admin user
-// When I visit the Merchant Item Show page (/merchants/:merchant_id/items/:item_id)
-// I see a photo related to that item's name
