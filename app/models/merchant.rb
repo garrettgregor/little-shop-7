@@ -9,18 +9,28 @@ class Merchant < ApplicationRecord
 
   def top_5_customers
     Customer.joins(:transactions)
-    .select("customers.id, customers.first_name, customers.last_name, COUNT(transactions.id) AS transaction_count")
-    .where(transactions: { result: 1 } )
-    .group("customers.id, customers.first_name, customers.last_name")
-    .order("transaction_count DESC")
-    .limit(5)
+            .select("customers.*, COUNT(transactions.id) AS transaction_count")
+            .where(transactions: { result: 1 } )
+            .group(:id)
+            .order("transaction_count DESC")
+            .limit(5)
+  end
+
+  def self.top_5_merchants
+    Merchant.joins(:transactions)
+            .select(:name, :id, "SUM(invoice_items.quantity * invoice_items.unit_price) AS total_sales")
+            .where("transactions.result = 1")
+            .group(:id)
+            .order("total_sales DESC")
+            .limit(5)
   end
 
   def not_shipped_items
-    self.invoices.joins(:invoice_items)
-    .where("invoice_items.status != 2")
-    .order(:created_at)
-    .group(:id)
+    self.invoices
+        .joins(:invoice_items)
+        .where("invoice_items.status != 2")
+        .order(:created_at)
+        .group(:id)
   end
 
   def self.enabled_merchants

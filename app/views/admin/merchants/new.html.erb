@@ -6,7 +6,7 @@
 <br>
 <br>
 <%# Refactor these br's later to format padding/argins better  %>
-<%= form_with model: Merchant.new, url: admin_merchants_path do |f| %>
+<%= form_with model: @merchant, url: admin_merchants_path do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %>
   <%= f.hidden_field :status, value: "disabled" %>

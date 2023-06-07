@@ -26,6 +26,13 @@ RSpec.describe Merchant, type: :model do
         expect(Merchant.disabled_merchants).to match_array([merchant_6, merchant_7])
       end
     end
+
+    describe "::top_5_merchants" do
+      top_5_admin_merchant_data
+      it "returns a list of the disabled merchants" do
+        expect(Merchant.top_5_merchants).to match_array([merchant_11, merchant_12, merchant_13, merchant_14, merchant_15])
+      end
+    end
   end
 
   describe "instance methods" do
